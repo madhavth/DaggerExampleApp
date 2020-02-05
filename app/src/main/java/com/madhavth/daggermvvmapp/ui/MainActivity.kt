@@ -16,6 +16,7 @@ import com.madhavth.daggermvvmapp.databinding.ActivityMainBinding
 import com.madhavth.daggermvvmapp.viewModels.MainViewModel
 import com.madhavth.daggermvvmapp.viewModels.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_todo_list.*
 import kotlinx.coroutines.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -53,6 +54,11 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
 
+        //get todoList from api
+        coroutineScope.launch {
+            mainViewModel.getTodoLists()
+        }
+
 
         //set adapter for todolist
         val todoListAdapter = TodoListRecyclerViewAdapter()
@@ -84,7 +90,6 @@ class MainActivity : AppCompatActivity() {
         //inserting into room db
         btnAddToDB.setOnClickListener {
             coroutineScope.launch {
-                mainViewModel.getTodoLists()
                 mainViewModel.insertTodo()
             }
         }
@@ -96,6 +101,31 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.deleteAllTodo()
             }
         }
+
+
+        var _showRetrofit = true
+
+        //toggle list
+        btnToggleList.setOnClickListener {
+
+            if(_showRetrofit)
+            {
+                Timber.d("listTodos ${mainViewModel.listTodos.value}")
+                todoListAdapter.submitList(mainViewModel.listTodos.value)
+                _showRetrofit = !_showRetrofit
+                btnToggleList.text = "Show Room List"
+            }
+
+            else
+            {
+                Timber.d("showing Room Todos: ${mainViewModel.todoList?.value}")
+                todoListAdapter.submitList(mainViewModel.todoList?.value?.toBaseModel())
+                _showRetrofit = !_showRetrofit
+                btnToggleList.text = "Show Retrofit List"
+            }
+
+        }
+
     }
 
 
