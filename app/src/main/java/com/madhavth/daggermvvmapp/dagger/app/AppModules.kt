@@ -31,12 +31,12 @@ class AppModules constructor(baseUrl: String)
         return GsonConverterFactory.create()
     }
 
-    @Singleton
-    @Provides
-    fun sth()
-    {
-
-    }
+//    @Singleton
+//    @Provides
+//    fun provideCoroutineAdapter():
+//    {
+//
+//    }
 
     @Singleton
     @Provides
@@ -44,7 +44,6 @@ class AppModules constructor(baseUrl: String)
     {
         return Retrofit.Builder().baseUrl(baseURL)
             .addConverterFactory(gsonConverterFactory)
-
             .build()
     }
 }

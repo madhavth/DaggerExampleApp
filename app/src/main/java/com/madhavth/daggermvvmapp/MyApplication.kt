@@ -23,25 +23,17 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         ctx = applicationContext
-        init()
+        appComponent =  initAppComponent()
+        Timber.plant(Timber.DebugTree())
     }
 
-
-    private fun init()
-    {
-        applicationScope.launch {
-            appComponent =  initAppComponent()
-            Timber.plant(Timber.DebugTree())
-        }
-    }
 
     private fun initAppComponent(): AppComponent
     {
-        appComponent = DaggerAppComponent
+        return DaggerAppComponent
             .builder()
-            .appModules(AppModules(""))
+            .appModules(AppModules("https://jsonplaceholder.typicode.com/"))
             .build()
 
-        return appComponent
     }
 }

@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.madhavth.daggermvvmapp.data.models.Todos
 import com.madhavth.daggermvvmapp.data.service.TestApiService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
-import retrofit2.await
 import retrofit2.create
 import timber.log.Timber
 import javax.inject.Inject
@@ -40,7 +37,7 @@ class MyRepository @Inject constructor()
 
 
     init {
-        testApi = retrofit.create()
+        testApi = retrofit.create(TestApiService::class.java)
     }
 
 }
