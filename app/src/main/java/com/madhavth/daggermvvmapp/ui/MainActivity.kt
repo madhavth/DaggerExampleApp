@@ -26,12 +26,6 @@ class MainActivity : AppCompatActivity() {
     private var job= Job()
     private val coroutineScope = CoroutineScope(Dispatchers.Main+ job)
 
-    @Inject
-    lateinit var repo: MyRepository
-
-    @Inject
-    lateinit var todoDao: TodoDao
-
 
     @Inject
     lateinit var todoListAdapter: TodoListRecyclerViewAdapter
@@ -50,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         val appComponent = MyApplication.appComponent
         appComponent.inject(this)
 
-        val viewModelFactory = ViewModelFactory(application, repo)
+        val viewModelFactory = ViewModelFactory(application)
         mainViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(MainViewModel::class.java)
 

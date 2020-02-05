@@ -3,6 +3,7 @@ package com.madhavth.daggermvvmapp.dagger.app
 import com.madhavth.daggermvvmapp.data.repository.MyRepository
 import com.madhavth.daggermvvmapp.ui.MainActivity
 import com.madhavth.daggermvvmapp.viewModels.MainViewModel
+import com.madhavth.daggermvvmapp.viewModels.ViewModelFactory
 import dagger.Component
 import javax.inject.Singleton
 
@@ -13,5 +14,6 @@ interface AppComponent
     fun getRepo(): MyRepository
     fun inject(activity: MainActivity)
     fun inject(repo: MyRepository)
+    fun inject(factory: ViewModelFactory)
 //    fun inject(viewModel: MainViewModel)
 }
