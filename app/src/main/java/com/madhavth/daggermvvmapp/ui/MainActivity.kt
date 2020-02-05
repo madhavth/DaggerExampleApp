@@ -32,11 +32,16 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var todoDao: TodoDao
 
+
+    @Inject
+    lateinit var todoListAdapter: TodoListRecyclerViewAdapter
+
+
+
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        title  = "Room Todo List"
 
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil
@@ -61,7 +66,6 @@ class MainActivity : AppCompatActivity() {
 
 
         //set adapter for todolist
-        val todoListAdapter = TodoListRecyclerViewAdapter()
         listRecyclerView.adapter =  todoListAdapter
 
 
@@ -70,7 +74,10 @@ class MainActivity : AppCompatActivity() {
 
             if(it!=null)
             {
+                if(mainViewModel.toggleList.value!!)
                 todoListAdapter.submitList(it.toBaseModel())
+                else
+                    todoListAdapter.submitList(mainViewModel.listTodos.value)
             }
 
             if(mainViewModel.doneShowingUpdateListTodos.value == false)
@@ -103,16 +110,14 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        var _showRetrofit = true
-
         //toggle list
         btnToggleList.setOnClickListener {
 
-            if(_showRetrofit)
+            if(mainViewModel.toggleList.value!!)
             {
                 Timber.d("listTodos ${mainViewModel.listTodos.value}")
                 todoListAdapter.submitList(mainViewModel.listTodos.value)
-                _showRetrofit = !_showRetrofit
+                mainViewModel.toggleList()
                 btnToggleList.text = "Show Room List"
             }
 
@@ -120,7 +125,7 @@ class MainActivity : AppCompatActivity() {
             {
                 Timber.d("showing Room Todos: ${mainViewModel.todoList?.value}")
                 todoListAdapter.submitList(mainViewModel.todoList?.value?.toBaseModel())
-                _showRetrofit = !_showRetrofit
+                mainViewModel.toggleList()
                 btnToggleList.text = "Show Retrofit List"
             }
 

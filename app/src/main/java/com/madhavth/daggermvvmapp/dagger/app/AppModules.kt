@@ -3,6 +3,7 @@ package com.madhavth.daggermvvmapp.dagger.app
 import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.madhavth.daggermvvmapp.MyApplication
+import com.madhavth.daggermvvmapp.data.adapter.TodoListRecyclerViewAdapter
 import com.madhavth.daggermvvmapp.data.database.MyDatabase
 import com.madhavth.daggermvvmapp.data.database.TodoDao
 import com.madhavth.daggermvvmapp.data.repository.MyRepository
@@ -66,6 +67,14 @@ class AppModules(baseUrl: String) {
     fun providesTodoDao(myDatabase: MyDatabase): TodoDao
     {
         return myDatabase.todoDao()
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideTodoListAdapter(): TodoListRecyclerViewAdapter
+    {
+        return TodoListRecyclerViewAdapter()
     }
 
 }

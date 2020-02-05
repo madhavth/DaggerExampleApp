@@ -29,6 +29,11 @@ class MainViewModel @Inject constructor(private val repo: MyRepository): ViewMod
             get() = _doneShowingUpdateListTodos
 
 
+    private val _toggleList = MutableLiveData<Boolean>()
+        val toggleList: LiveData<Boolean>
+            get() = _toggleList
+
+
     suspend fun clearList()
     {
         repo.clearList()
@@ -65,11 +70,17 @@ class MainViewModel @Inject constructor(private val repo: MyRepository): ViewMod
     }
 
 
+    fun toggleList()
+    {
+        val check=  _toggleList.value!!
+        _toggleList.value = !check
+    }
+
 
     init
     {
         _doneShowingUpdateListTodos.value = true
-
+        _toggleList.value = true
     }
 
 }

@@ -13,5 +13,5 @@ interface AppComponent
     fun getRepo(): MyRepository
     fun inject(activity: MainActivity)
     fun inject(repo: MyRepository)
-    fun inject(viewModel: MainViewModel)
+//    fun inject(viewModel: MainViewModel)
 }
