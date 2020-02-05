@@ -31,10 +31,6 @@ class MainViewModel @Inject constructor(private val repo: MyRepository): ViewMod
         val doneShowingUpdateListTodos: LiveData<Boolean>
             get() = _doneShowingUpdateListTodos
 
-    fun getData()
-    {
-        _simpleData.value =  repo.getData()
-    }
 
     suspend fun clearList()
     {
@@ -66,9 +62,11 @@ class MainViewModel @Inject constructor(private val repo: MyRepository): ViewMod
     }
 
 
+
     init
     {
         _doneShowingUpdateListTodos.value = true
+
     }
 
 }

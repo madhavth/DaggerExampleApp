@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.madhavth.daggermvvmapp.MyApplication
 import com.madhavth.daggermvvmapp.R
+import com.madhavth.daggermvvmapp.data.adapter.TodoListRecyclerViewAdapter
 import com.madhavth.daggermvvmapp.data.database.TodoDao
+import com.madhavth.daggermvvmapp.data.database.toBaseModel
 import com.madhavth.daggermvvmapp.data.models.Todos
 import com.madhavth.daggermvvmapp.data.repository.MyRepository
 import com.madhavth.daggermvvmapp.databinding.ActivityMainBinding
@@ -34,6 +36,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        title  = "Room Todo List"
+
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil
             .setContentView(this, R.layout.activity_main)
@@ -49,8 +54,8 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = mainViewModel
         binding.lifecycleOwner = this
 
-        mainViewModel.getData()
 
+        //inserting into room db
         btnDoSomething.setOnClickListener {
             coroutineScope.launch {
                 mainViewModel.getTodoLists()
@@ -60,10 +65,26 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        mainViewModel.todoList.observe(this, Observer {
+
+        //set adapter for todolist
+        val todoListAdapter = TodoListRecyclerViewAdapter()
+        listRecyclerView.adapter =  todoListAdapter
+
+
+        //checking for changes using the livedata list obtained from room
+        mainViewModel.todoList?.observe(this, Observer {
+
+            if(it!=null)
+            {
+                Toast.makeText(applicationContext
+                , "adding list",
+                Toast.LENGTH_SHORT).show()
+                todoListAdapter.submitList(it.toBaseModel())
+            }
 
             if(mainViewModel.doneShowingUpdateListTodos.value == false)
             {
+                todoListAdapter.submitList(it.toBaseModel())
                 Timber.d("list Updated Size- ${it.size} and values $it")
                 Toast.makeText(applicationContext
                     , "list Updated size ${it.size}",

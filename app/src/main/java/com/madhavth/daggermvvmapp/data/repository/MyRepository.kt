@@ -19,7 +19,7 @@ class MyRepository @Inject constructor()
     @Inject lateinit var retrofit: Retrofit
     @Inject lateinit var todoDao: TodoDao
 
-    lateinit var todoList: LiveData<List<TodoEntity>>
+    var todoList: LiveData<List<TodoEntity>>? = null
 
     private lateinit var testApi: TestApiService
 
@@ -28,11 +28,8 @@ class MyRepository @Inject constructor()
         get() = _listTodos
 
 
-    fun getData():String
-    {
-        return "data"
-    }
 
+    //get todos from api call
     suspend fun getAllTodos(): List<Todos>?
     {
         try
@@ -48,6 +45,8 @@ class MyRepository @Inject constructor()
         return null
     }
 
+
+    //insert new todoitem
     suspend fun dataBaseStuff()
     {
         withContext(Dispatchers.IO)
@@ -71,7 +70,7 @@ class MyRepository @Inject constructor()
 
 
     init {
-        var appComponent  = MyApplication.appComponent
+        val appComponent  = MyApplication.appComponent
         appComponent.inject(this)
         testApi = retrofit.create(TestApiService::class.java)
         todoList = todoDao.getAllTodos()
