@@ -1,5 +1,6 @@
 package com.madhavth.daggermvvmapp.dagger.main
 
+import androidx.lifecycle.ViewModelProvider
 import com.madhavth.daggermvvmapp.ui.MainActivity
 import dagger.Component
 
@@ -7,4 +8,5 @@ import dagger.Component
 interface MainComponent
 {
     fun inject(mainActivity: MainActivity)
+    fun getFactory(factory: ViewModelProvider.Factory): ViewModelProvider.Factory
 }
