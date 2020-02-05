@@ -15,4 +15,5 @@ class MainViewModel @Inject constructor(private val repo: MyRepository): ViewMod
         simpleData.value = repo.getData()
     }
 
+
 }
