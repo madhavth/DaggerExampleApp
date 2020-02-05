@@ -3,12 +3,9 @@ package com.madhavth.daggermvvmapp.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.madhavth.daggermvvmapp.MyApplication
 import com.madhavth.daggermvvmapp.data.database.TodoDao
 import com.madhavth.daggermvvmapp.data.models.Todos
 import com.madhavth.daggermvvmapp.data.repository.MyRepository
-import kotlinx.coroutines.*
-import okhttp3.Dispatcher
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -44,11 +41,17 @@ class MainViewModel @Inject constructor(private val repo: MyRepository): ViewMod
         Timber.d("listTodos is ${_listTodos.value}")
     }
 
-    suspend fun doDatabaseRelatedStuff()
+    suspend fun insertTodo()
     {
-        repo.dataBaseStuff()
+        repo.insertTodo()
         showUpdateListToast()
     }
+
+    suspend fun deleteAllTodo()
+    {
+        repo.deleteAllTodo()
+    }
+
 
     fun showUpdateListToast()
     {

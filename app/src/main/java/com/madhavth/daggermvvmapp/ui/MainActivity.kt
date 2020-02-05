@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.madhavth.daggermvvmapp.MyApplication
 import com.madhavth.daggermvvmapp.R
 import com.madhavth.daggermvvmapp.data.adapter.TodoListRecyclerViewAdapter
 import com.madhavth.daggermvvmapp.data.database.TodoDao
 import com.madhavth.daggermvvmapp.data.database.toBaseModel
-import com.madhavth.daggermvvmapp.data.models.Todos
 import com.madhavth.daggermvvmapp.data.repository.MyRepository
 import com.madhavth.daggermvvmapp.databinding.ActivityMainBinding
 import com.madhavth.daggermvvmapp.viewModels.MainViewModel
@@ -55,16 +53,6 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
 
-        //inserting into room db
-        btnDoSomething.setOnClickListener {
-            coroutineScope.launch {
-                mainViewModel.getTodoLists()
-                tvDemo.text = "fetched List Size is  ${mainViewModel.listTodos.value?.size}"
-
-                mainViewModel.doDatabaseRelatedStuff()
-            }
-        }
-
 
         //set adapter for todolist
         val todoListAdapter = TodoListRecyclerViewAdapter()
@@ -76,9 +64,6 @@ class MainActivity : AppCompatActivity() {
 
             if(it!=null)
             {
-                Toast.makeText(applicationContext
-                , "adding list",
-                Toast.LENGTH_SHORT).show()
                 todoListAdapter.submitList(it.toBaseModel())
             }
 
@@ -94,6 +79,23 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+
+
+        //inserting into room db
+        btnAddToDB.setOnClickListener {
+            coroutineScope.launch {
+                mainViewModel.getTodoLists()
+                mainViewModel.insertTodo()
+            }
+        }
+
+
+        //deleting all from db
+        btnDeleteAll.setOnClickListener {
+            coroutineScope.launch {
+                mainViewModel.deleteAllTodo()
+            }
+        }
     }
 
 

@@ -47,7 +47,7 @@ class MyRepository @Inject constructor()
 
 
     //insert new todoitem
-    suspend fun dataBaseStuff()
+    suspend fun insertTodo()
     {
         withContext(Dispatchers.IO)
         {
@@ -67,6 +67,16 @@ class MyRepository @Inject constructor()
             todoDao.deleteAllTodos()
         }
     }
+
+
+    suspend fun deleteAllTodo()
+    {
+        withContext(Dispatchers.IO)
+        {
+            todoDao.deleteAllTodos()
+        }
+    }
+
 
 
     init {

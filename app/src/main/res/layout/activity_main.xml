@@ -31,25 +31,22 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             >
-            <TextView
-                android:id="@+id/tvDemo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.simpleData}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="GET LIST"
-                android:id="@+id/btnDoSomething"
+                android:text="add"
+                android:id="@+id/btnAddToDB"
                 />
+
+            <Button
+                android:id="@+id/btnDeleteAll"
+                android:layout_marginStart="10dp"
+                android:text="Delete All"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
     </LinearLayout>
