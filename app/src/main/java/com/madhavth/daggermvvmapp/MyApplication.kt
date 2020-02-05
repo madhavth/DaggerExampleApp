@@ -17,7 +17,7 @@ class MyApplication : Application() {
 
     companion object {
         var ctx: Context? = null
-        private lateinit var appComponent: AppComponent
+        lateinit var appComponent: AppComponent
     }
 
     override fun onCreate() {

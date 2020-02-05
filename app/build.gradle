@@ -46,6 +46,14 @@ dependencies {
     ext.retrofit_version = '2.6.1'
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit-converters:$retrofit_version"
+
+
+    //Moshi
+    ext.version_moshi= "1.9.2"
+    implementation "com.squareup.moshi:moshi:$version_moshi"
+    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+
+
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit-adapters:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
@@ -86,4 +94,6 @@ dependencies {
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
+
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
 }

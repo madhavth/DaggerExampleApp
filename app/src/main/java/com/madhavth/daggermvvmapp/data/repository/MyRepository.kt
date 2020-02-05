@@ -2,6 +2,7 @@ package com.madhavth.daggermvvmapp.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.madhavth.daggermvvmapp.MyApplication
 import com.madhavth.daggermvvmapp.data.models.Todos
 import com.madhavth.daggermvvmapp.data.service.TestApiService
 import retrofit2.Retrofit
@@ -38,6 +39,8 @@ class MyRepository @Inject constructor()
 
     init {
         testApi = retrofit.create(TestApiService::class.java)
+        var appComponent  = MyApplication.appComponent
+        appComponent.inject(this)
     }
 
 }

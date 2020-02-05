@@ -1,6 +1,7 @@
 package com.madhavth.daggermvvmapp.dagger.app
 
 import com.google.gson.Gson
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.madhavth.daggermvvmapp.data.repository.MyRepository
 import dagger.Module
 import dagger.Provides
@@ -31,19 +32,22 @@ class AppModules constructor(baseUrl: String)
         return GsonConverterFactory.create()
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideCoroutineAdapter():
-//    {
-//
-//    }
+    @Singleton
+    @Provides
+    fun provideCoroutineAdapter(): CoroutineCallAdapterFactory
+    {
+        return CoroutineCallAdapterFactory()
+    }
 
     @Singleton
     @Provides
-    fun provideRetrofit(gsonConverterFactory: GsonConverterFactory): Retrofit
+    fun provideRetrofit(gsonConverterFactory: GsonConverterFactory,
+                        callAdapter: CoroutineCallAdapterFactory
+                        ): Retrofit
     {
         return Retrofit.Builder().baseUrl(baseURL)
             .addConverterFactory(gsonConverterFactory)
+            .addCallAdapterFactory(callAdapter)
             .build()
     }
 }
