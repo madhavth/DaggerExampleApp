@@ -1,7 +1,10 @@
 package com.madhavth.daggermvvmapp.dagger.app
 
-import com.google.gson.Gson
+import androidx.room.Room
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.madhavth.daggermvvmapp.MyApplication
+import com.madhavth.daggermvvmapp.data.database.MyDatabase
+import com.madhavth.daggermvvmapp.data.database.TodoDao
 import com.madhavth.daggermvvmapp.data.repository.MyRepository
 import dagger.Module
 import dagger.Provides
@@ -11,13 +14,8 @@ import javax.inject.Singleton
 
 
 @Module
-class AppModules constructor(baseUrl: String)
-{
-    var baseURL: String= ""
-
-    init {
-        this.baseURL = baseUrl
-    }
+class AppModules(baseUrl: String) {
+    var baseURL: String= baseUrl
 
     @Provides
     fun provideRepository(): MyRepository
@@ -51,6 +49,23 @@ class AppModules constructor(baseUrl: String)
             .build()
     }
 
+    @Singleton
+    @Provides
+    fun createRoomDB(): MyDatabase
+    {
+        val myDatabase = Room.databaseBuilder(MyApplication.ctx!!,
+            MyDatabase::class.java,
+            "my-db")
+            .build()
+        return myDatabase
+    }
 
+
+    @Singleton
+    @Provides
+    fun providesTodoDao(myDatabase: MyDatabase): TodoDao
+    {
+        return myDatabase.todoDao()
+    }
 
 }

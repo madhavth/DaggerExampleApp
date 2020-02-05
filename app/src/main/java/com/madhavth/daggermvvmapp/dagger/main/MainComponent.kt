@@ -10,6 +10,6 @@ import dagger.Component
 @Component(modules = [MainModule::class], dependencies = [AppComponent::class])
 interface MainComponent
 {
-    fun inject(mainActivity: MainActivity)
-    fun inject(viewModel: MainViewModel)
+//    fun inject(mainActivity: MainActivity)
+//    fun inject(viewModel: MainViewModel)
 }
