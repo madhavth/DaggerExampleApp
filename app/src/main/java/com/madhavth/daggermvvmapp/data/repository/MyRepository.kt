@@ -19,21 +19,25 @@ class MyRepository @Inject constructor()
     val listTodos: LiveData<List<Todos>>
         get() = _listTodos
 
+
     fun getData():String
     {
         return "data"
     }
 
-    suspend fun getAllTodos()
+    suspend fun getAllTodos(): List<Todos>?
     {
         try
         {
             _listTodos.value = testApi.getTodos().await()
+            return _listTodos.value!!
         }
         catch (e: Exception)
         {
             Timber.d("error occured while fetching list ${e.localizedMessage}")
         }
+
+        return null
     }
 
 

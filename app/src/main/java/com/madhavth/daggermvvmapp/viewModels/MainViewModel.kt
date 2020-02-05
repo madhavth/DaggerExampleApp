@@ -3,23 +3,25 @@ package com.madhavth.daggermvvmapp.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.madhavth.daggermvvmapp.data.models.Todos
 import com.madhavth.daggermvvmapp.data.repository.MyRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import okhttp3.Dispatcher
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(private val repo: MyRepository): ViewModel()
 {
 
-    private var job = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.IO + job)
-
     private var _simpleData = MutableLiveData<String>()
         val simpleData : LiveData<String>
             get() = _simpleData
+
+
+    private var _listTodos= MutableLiveData<List<Todos>>()
+        val listTodos: LiveData<List<Todos>>
+            get() = _listTodos
+
 
     fun getData()
     {
@@ -27,17 +29,10 @@ class MainViewModel @Inject constructor(private val repo: MyRepository): ViewMod
     }
 
 
-    fun getTodoLists()
+    suspend fun getTodoLists()
     {
-        coroutineScope.launch {
-
-        }
+        _listTodos.value = repo.getAllTodos()
+        Timber.d("listTodos is ${_listTodos.value}")
     }
 
-
-
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
-    }
 }

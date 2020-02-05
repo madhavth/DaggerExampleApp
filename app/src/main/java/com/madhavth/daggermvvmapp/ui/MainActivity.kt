@@ -11,9 +11,17 @@ import com.madhavth.daggermvvmapp.data.repository.MyRepository
 import com.madhavth.daggermvvmapp.databinding.ActivityMainBinding
 import com.madhavth.daggermvvmapp.viewModels.MainViewModel
 import com.madhavth.daggermvvmapp.viewModels.ViewModelFactory
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
+    private var job= Job()
+    private val coroutineScope = CoroutineScope(Dispatchers.Main+ job)
 
     @Inject
     lateinit var repo: MyRepository
@@ -33,7 +41,22 @@ class MainActivity : AppCompatActivity() {
             .get(MainViewModel::class.java)
 
 
+        binding.viewModel = mainViewModel
+        binding.lifecycleOwner = this
+
         mainViewModel.getData()
 
+        btnDoSomething.setOnClickListener {
+            coroutineScope.launch {
+                mainViewModel.getTodoLists()
+                tvDemo.text = "fetched List Size is  ${mainViewModel.listTodos.value?.size}"
+            }
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 }
