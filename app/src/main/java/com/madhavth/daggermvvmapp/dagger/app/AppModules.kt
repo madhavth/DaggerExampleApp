@@ -33,10 +33,18 @@ class AppModules constructor(baseUrl: String)
 
     @Singleton
     @Provides
+    fun sth()
+    {
+
+    }
+
+    @Singleton
+    @Provides
     fun provideRetrofit(gsonConverterFactory: GsonConverterFactory): Retrofit
     {
         return Retrofit.Builder().baseUrl(baseURL)
             .addConverterFactory(gsonConverterFactory)
+
             .build()
     }
 }

@@ -11,3 +11,6 @@ interface AppComponent
 {
     fun inject(repo: MyRepository)
 }
+
+
+
