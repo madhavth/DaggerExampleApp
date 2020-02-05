@@ -30,10 +30,10 @@ class MyApplication : Application() {
 
     private fun initAppComponent(): AppComponent
     {
-        return DaggerAppComponent
+        appComponent =  DaggerAppComponent
             .builder()
             .appModules(AppModules("https://jsonplaceholder.typicode.com/"))
             .build()
-
+        return appComponent
     }
 }

@@ -38,9 +38,9 @@ class MyRepository @Inject constructor()
 
 
     init {
-        testApi = retrofit.create(TestApiService::class.java)
         var appComponent  = MyApplication.appComponent
         appComponent.inject(this)
+        testApi = retrofit.create(TestApiService::class.java)
     }
 
 }

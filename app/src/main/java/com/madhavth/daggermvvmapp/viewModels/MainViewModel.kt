@@ -1,5 +1,6 @@
 package com.madhavth.daggermvvmapp.viewModels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.madhavth.daggermvvmapp.data.repository.MyRepository
@@ -16,11 +17,13 @@ class MainViewModel @Inject constructor(private val repo: MyRepository): ViewMod
     private var job = Job()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + job)
 
-    private val simpleData = MutableLiveData<String>()
+    private var _simpleData = MutableLiveData<String>()
+        val simpleData : LiveData<String>
+            get() = _simpleData
 
     fun getData()
     {
-        simpleData.value = repo.getData()
+        _simpleData.value =  repo.getData()
     }
 
 
