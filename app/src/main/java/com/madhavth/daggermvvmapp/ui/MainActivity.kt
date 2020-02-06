@@ -30,12 +30,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var todoListAdapter: TodoListRecyclerViewAdapter
 
-
-
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
 
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil
@@ -44,8 +41,8 @@ class MainActivity : AppCompatActivity() {
         val appComponent = MyApplication.appComponent
         appComponent.inject(this)
 
-        val viewModelFactory = ViewModelFactory(application)
-        mainViewModel = ViewModelProviders.of(this, viewModelFactory)
+        val factory =ViewModelFactory()
+        mainViewModel = ViewModelProviders.of(this, factory)
             .get(MainViewModel::class.java)
 
 
@@ -104,6 +101,20 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        //set text for button
+        mainViewModel.toggleList.observe(this, Observer {
+            if(it == false)
+            {
+                btnToggleList.text = "Show Room List"
+            }
+
+            else
+            {
+                btnToggleList.text = "Show Retrofit List"
+            }
+        })
+
+
         //toggle list
         btnToggleList.setOnClickListener {
 
@@ -112,7 +123,6 @@ class MainActivity : AppCompatActivity() {
                 Timber.d("listTodos ${mainViewModel.listTodos.value}")
                 todoListAdapter.submitList(mainViewModel.listTodos.value)
                 mainViewModel.toggleList()
-                btnToggleList.text = "Show Room List"
             }
 
             else
@@ -120,7 +130,6 @@ class MainActivity : AppCompatActivity() {
                 Timber.d("showing Room Todos: ${mainViewModel.todoList?.value}")
                 todoListAdapter.submitList(mainViewModel.todoList?.value?.toBaseModel())
                 mainViewModel.toggleList()
-                btnToggleList.text = "Show Retrofit List"
             }
 
         }

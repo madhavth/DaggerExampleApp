@@ -3,6 +3,7 @@ package com.madhavth.daggermvvmapp.dagger.main
 import android.content.Context
 import com.madhavth.daggermvvmapp.dagger.ActivityContext
 import com.madhavth.daggermvvmapp.dagger.ApplicationContext
+import com.madhavth.daggermvvmapp.dagger.activityScope
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

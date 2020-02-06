@@ -8,7 +8,7 @@ import com.madhavth.daggermvvmapp.dagger.app.AppComponent
 import com.madhavth.daggermvvmapp.data.repository.MyRepository
 import javax.inject.Inject
 
-class ViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+class ViewModelFactory : ViewModelProvider.Factory {
 
     @Inject
     lateinit var repository: MyRepository

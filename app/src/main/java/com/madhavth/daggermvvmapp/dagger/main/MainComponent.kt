@@ -1,12 +1,13 @@
 package com.madhavth.daggermvvmapp.dagger.main
 
+import com.madhavth.daggermvvmapp.dagger.activityScope
 import com.madhavth.daggermvvmapp.dagger.app.AppComponent
-import com.madhavth.daggermvvmapp.dagger.applicationScope
 import com.madhavth.daggermvvmapp.ui.MainActivity
 import com.madhavth.daggermvvmapp.viewModels.MainViewModel
 import dagger.Component
 
-@applicationScope
+
+@activityScope
 @Component(modules = [MainModule::class], dependencies = [AppComponent::class])
 interface MainComponent
 {
