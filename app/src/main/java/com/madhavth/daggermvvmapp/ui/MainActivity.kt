@@ -101,20 +101,6 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        //set text for button
-        mainViewModel.toggleList.observe(this, Observer {
-            if(it == false)
-            {
-                btnToggleList.text = "Show Room List"
-            }
-
-            else
-            {
-                btnToggleList.text = "Show Retrofit List"
-            }
-        })
-
-
         //toggle list
         btnToggleList.setOnClickListener {
 

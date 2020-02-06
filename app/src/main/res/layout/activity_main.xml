@@ -49,6 +49,7 @@
                 android:layout_height="wrap_content"/>
 
             <Button
+                app:showText = "@{viewModel.toggleList.booleanValue()}"
                 android:layout_marginStart="10dp"
                 android:text="show retrofit list"
                 android:id="@+id/btnToggleList"
